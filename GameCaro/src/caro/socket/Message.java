@@ -36,7 +36,7 @@ public class Message {
 						if (line != null) {
 							if (line.equals("1")) {
 								gameCaro.dispose();
-								new GameCaro((gameCaro.ngChoi + 1) % 2, Message.this);
+								gameCaro = new GameCaro((gameCaro.ngChoi + 1) % 2, Message.this);
 							} else if (line.equals("2")) {
 								new ShowMess("Doi phuong da thoat game. Ban la nguoi chien thang");
 								gameCaro.dispose();
