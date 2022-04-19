@@ -101,19 +101,19 @@ public class GameCaro extends JFrame implements ActionListener {
 		endGame(ngChoi == 0 ? true : false);
 	}
 
-	public void addPoint(int x, int y, int ngChoi) {
-		b[x][y].setText("" + quanCo[(ngChoi + ngChoi) % 2]);
-		b[x][y].setForeground(cl[(ngChoi + ngChoi) % 2]);
+	public void addPoint(int x, int y, int value) {
+		b[x][y].setText("" + quanCo[(ngChoi + value) % 2]);
+		b[x][y].setForeground(cl[(ngChoi + value) % 2]);
 		b[x][y].setFont(new Font("Times New Roman", Font.BOLD, 10));
-		banCo[x][y] = quanCo[(ngChoi + ngChoi) % 2];
-		if (checkWin(x, y, quanCo[(ngChoi + ngChoi) % 2])) {
+		banCo[x][y] = quanCo[(ngChoi + value) % 2];
+		if (checkWin(x, y, quanCo[(ngChoi + value) % 2])) {
 			lb.setBackground(Color.MAGENTA);
 			if (ngChoi == 0)
 				lb.setText("Bạn là người chiến thắng");
 			else
 				lb.setText("Bạn là người thua cuộc");
 			endGame(false);
-		} else if (count == 899) {
+		} else if (count == soDong * soCot - 1) {
 			lb.setBackground(Color.MAGENTA);
 			lb.setText("HÒA");
 			endGame(false);
@@ -124,7 +124,6 @@ public class GameCaro extends JFrame implements ActionListener {
 				lb.setText("Lượt của đối thủ");
 		}
 		count++;
-
 	}
 
 	public static boolean checkWin(int x, int y, char co) {
@@ -210,8 +209,8 @@ public class GameCaro extends JFrame implements ActionListener {
 	private Container cn;
 	private JPanel pn, pn2;
 	private static JLabel lb;
-	private static final int soDong = 30;
-	private static final int soCot = 30;
+	private static final int soDong = 20;
+	private static final int soCot = 20;
 	private static final char[] quanCo = { 'X', 'O' };
 	private static final Color[] cl = { Color.RED, Color.BLUE };
 	private static char[][] banCo;
