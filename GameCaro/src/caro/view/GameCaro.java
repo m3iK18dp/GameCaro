@@ -88,14 +88,14 @@ public class GameCaro extends JFrame implements ActionListener {
 		});
 		GroupLayout gl_pn2 = new GroupLayout(pn2);
 		gl_pn2.setHorizontalGroup(gl_pn2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pn2.createSequentialGroup().addGap(440).addComponent(lb).addGap(228)
-						.addComponent(btnNewButton).addGap(659).addComponent(btnNewButton_1).addContainerGap()));
+				.addGroup(gl_pn2.createSequentialGroup().addGap(220).addComponent(lb).addGap(114)
+						.addComponent(btnNewButton).addGap(330).addComponent(btnNewButton_1).addContainerGap()));
 		gl_pn2.setVerticalGroup(gl_pn2.createParallelGroup(Alignment.LEADING).addGroup(
 				gl_pn2.createSequentialGroup().addGap(5).addGroup(gl_pn2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNewButton).addComponent(btnNewButton_1).addComponent(lb))));
 		pn2.setLayout(gl_pn2);
 		this.setVisible(true);
-		this.setSize(1650, 1080);
+		this.setSize(880, 1080);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		endGame(ngChoi == 0 ? true : false);
@@ -104,7 +104,7 @@ public class GameCaro extends JFrame implements ActionListener {
 	public void addPoint(int x, int y, int value) {
 		b[x][y].setText("" + quanCo[(ngChoi + value) % 2]);
 		b[x][y].setForeground(cl[(ngChoi + value) % 2]);
-		b[x][y].setFont(new Font("Times New Roman", Font.BOLD, 14));
+		b[x][y].setFont(new Font("Times New Roman", Font.BOLD, 10));
 		banCo[x][y] = quanCo[(ngChoi + value) % 2];
 		count++;
 		if (checkWin(x, y, quanCo[(ngChoi + value) % 2])) {
