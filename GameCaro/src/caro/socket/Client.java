@@ -13,8 +13,9 @@ public class Client {
 
 	public Client(String serverHost, int port) throws UnknownHostException, IOException {
 		socketOfClient = new Socket(serverHost, port);
-		msg = new Message(socketOfClient, gameCaro);
+		msg = new Message(socketOfClient);
 		gameCaro = new GameCaro(1, msg);
+		msg.getGame(gameCaro);
 	}
 
 }

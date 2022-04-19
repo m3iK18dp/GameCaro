@@ -14,14 +14,19 @@ public class Message {
 	private Socket socket;
 	private PrintWriter out;
 	private BufferedReader reader;
+	private GameCaro gameCaro;
 
-	public Message(Socket socket, GameCaro gameCaro) throws IOException {
+	public Message(Socket socket) throws IOException {
 		out = new PrintWriter(socket.getOutputStream());
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		receive(gameCaro);
+		receive();
 	}
 
-	private void receive(GameCaro gameCaro) {
+	public void getGame(GameCaro game) {
+		this.gameCaro = game;
+	}
+
+	private void receive() {
 		Thread th = new Thread() {
 			@Override
 			public void run() {
@@ -33,8 +38,8 @@ public class Message {
 								gameCaro.dispose();
 								new GameCaro((gameCaro.ngChoi + 1) % 2, Message.this);
 							} else if (line.equals("2")) {
-								gameCaro.dispose();
 								new ShowMess("Doi phuong da thoat game. Ban la nguoi chien thang");
+								gameCaro.dispose();
 								new Start();
 							} else {
 								gameCaro.endGame(true);

@@ -24,9 +24,10 @@ public class Server {
 				public void run() {
 					try {
 						socketOfServer = listener.accept();
-						msg = new Message(socketOfServer, gameCaro);
+						msg = new Message(socketOfServer);
 						waitRoom.dispose();
 						gameCaro = new GameCaro(0, msg);
+						msg.getGame(gameCaro);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
