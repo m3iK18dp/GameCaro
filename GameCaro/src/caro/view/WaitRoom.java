@@ -22,13 +22,13 @@ public class WaitRoom extends JFrame {
 
 	public WaitRoom(int roomID) {
 		setType(Type.UTILITY);
-		setVisible(true);
-		setLocationRelativeTo(null);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		setLocationRelativeTo(null);
+		setVisible(true);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(WaitRoom.class.getResource("/caro/icon/wait.png")));

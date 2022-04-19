@@ -64,6 +64,7 @@ public class GameCaro extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new GameCaro((++ngChoi) % 2, msg);
+				msg.send("1");
 				dispose();
 			}
 		});

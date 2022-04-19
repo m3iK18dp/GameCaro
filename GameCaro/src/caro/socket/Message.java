@@ -32,6 +32,7 @@ public class Message {
 						String line = reader.readLine();
 						if (line != null) {
 							if (line.equals("1")) {
+								gameCaro.dispose();
 								new GameCaro((gameCaro.ngChoi + 1) % 2, Message.this);
 							} else if (line.equals("2")) {
 								gameCaro.dispose();
