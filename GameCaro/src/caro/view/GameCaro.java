@@ -31,7 +31,6 @@ public class GameCaro extends JFrame implements ActionListener {
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(GameCaro.class.getResource("/caro/icon/logo.png")));
 		this.msg = msg;
 		ngChoi = value;
-		cW = false;
 		b = new JButton[soDong + 2][soCot + 2];
 		banCo = new char[soDong + 2][soCot + 2];
 		setBounds(new Rectangle(5, 5, 5, 5));
@@ -53,7 +52,7 @@ public class GameCaro extends JFrame implements ActionListener {
 		for (int i = 1; i <= soDong; i++)
 			for (int j = 1; j <= soCot; j++)
 				pn.add(b[i][j]);
-		lb = new JLabel("X Đánh Trước");
+		lb = new JLabel(ngChoi == 0 ? "Bạn đánh trước" : "Đối thủ đánh trước");
 		lb.setForeground(new Color(255, 0, 0));
 		lb.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		pn2 = new JPanel();
@@ -99,33 +98,33 @@ public class GameCaro extends JFrame implements ActionListener {
 		this.setSize(1650, 1080);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		endGame(ngChoi == 0 ? true : false);
 	}
 
-	public void addPoint(int x, int y, int value) {
-		b[x][y].setText("" + quanCo[(ngChoi + value) % 2]);
-		b[x][y].setForeground(cl[(ngChoi + value) % 2]);
+	public void addPoint(int x, int y, int ngChoi) {
+		b[x][y].setText("" + quanCo[(ngChoi + ngChoi) % 2]);
+		b[x][y].setForeground(cl[(ngChoi + ngChoi) % 2]);
 		b[x][y].setFont(new Font("Times New Roman", Font.BOLD, 10));
-		banCo[x][y] = quanCo[(ngChoi + value) % 2];
-		if (checkWin(x, y, quanCo[(ngChoi + value) % 2])) {
+		banCo[x][y] = quanCo[(ngChoi + ngChoi) % 2];
+		if (checkWin(x, y, quanCo[(ngChoi + ngChoi) % 2])) {
 			lb.setBackground(Color.MAGENTA);
-			if (value == 0)
+			if (ngChoi == 0)
 				lb.setText("Bạn là người chiến thắng");
 			else
 				lb.setText("Bạn là người thua cuộc");
-		}
-		if (!cW && count == 159) {
+			endGame(false);
+		} else if (count == 899) {
 			lb.setBackground(Color.MAGENTA);
 			lb.setText("HÒA");
 			endGame(false);
-		}
-		if (!cW) {
+		} else {
 			if ((ngChoi + count) % 2 == 0)
 				lb.setText("Lượt của bạn");
 			else
 				lb.setText("Lượt của đối thủ");
 		}
 		count++;
-		endGame(false);
+
 	}
 
 	public static boolean checkWin(int x, int y, char co) {
@@ -191,19 +190,19 @@ public class GameCaro extends JFrame implements ActionListener {
 			for (int j = 1; j <= soCot; j++)
 				if (banCo[i][j] == '\u0000')
 					b[i][j].setEnabled(bl);
-		cW = true;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s = e.getActionCommand();
-		msg.send(s);
 		String[] k = s.split(" ");
 		int x = Integer.parseInt(k[0]);
 		int y = Integer.parseInt(k[1]);
 		if (banCo[x][y] == '\u0000') {
 			addPoint(x, y, 0);
 		}
+		msg.send(s);
+		endGame(false);
 	}
 
 	Message msg;
@@ -217,7 +216,6 @@ public class GameCaro extends JFrame implements ActionListener {
 	private static final Color[] cl = { Color.RED, Color.BLUE };
 	private static char[][] banCo;
 	public static int ngChoi;
-	private static boolean cW;
 	private JButton btnNewButton;
 	int count = 0;
 	private JButton btnNewButton_1;

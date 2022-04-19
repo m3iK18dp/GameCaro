@@ -8,6 +8,7 @@ import java.net.Socket;
 
 import caro.view.GameCaro;
 import caro.view.ShowMess;
+import caro.view.Start;
 
 public class Message {
 	private Socket socket;
@@ -28,13 +29,13 @@ public class Message {
 					try {
 						String line = reader.readLine();
 						if (line != null) {
-							System.out.println("-" + line + "-");
 							if (line.equals("1")) {
 								gameCaro.dispose();
 								new GameCaro((gameCaro.ngChoi + 1) % 2, Message.this);
 							} else if (line.equals("2")) {
 								gameCaro.dispose();
 								new ShowMess("Doi phuong da thoat game. Ban la nguoi chien thang");
+								new Start();
 							} else {
 								gameCaro.endGame(true);
 								String point[] = line.split(" ");
