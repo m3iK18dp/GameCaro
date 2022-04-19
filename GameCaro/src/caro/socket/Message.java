@@ -11,19 +11,16 @@ import caro.view.ShowMess;
 
 public class Message {
 	private Socket socket;
-	private GameCaro gameCaro;
 	private PrintWriter out;
 	private BufferedReader reader;
 
 	public Message(Socket socket, GameCaro gameCaro) throws IOException {
-		this.socket = socket;
-		this.gameCaro = gameCaro;
 		out = new PrintWriter(socket.getOutputStream());
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		receive();
+		receive(gameCaro);
 	}
 
-	private void receive() {
+	private void receive(GameCaro gameCaro) {
 		Thread th = new Thread() {
 			@Override
 			public void run() {
@@ -32,6 +29,7 @@ public class Message {
 						String line = reader.readLine();
 						if (line != null) {
 							if (line.equals("1")) {
+								new ShowMess("Die");
 								gameCaro.dispose();
 								new GameCaro((gameCaro.ngChoi + 1) % 2, Message.this);
 							} else if (line.equals("2")) {
