@@ -104,7 +104,10 @@ public class GameCaro extends JFrame implements ActionListener {
 		banCo[x][y] = quanCo[(ngChoi + value) % 2];
 		if (checkWin(x, y, quanCo[(ngChoi + value) % 2])) {
 			lb.setBackground(Color.MAGENTA);
-			lb.setText(b[x][y].getText() + " WIN");
+			if (value == 0)
+				lb.setText("Bạn là người chiến thắng");
+			else
+				lb.setText("Bạn là người thua cuộc");
 			endGame();
 		}
 		if (!cW && count == 159) {
@@ -113,7 +116,7 @@ public class GameCaro extends JFrame implements ActionListener {
 			endGame();
 		}
 		if (!cW) {
-			lb.setText("Lượt của " + quanCo[(ngChoi + value + 1) % 2]);
+			lb.setText("Lượt của " + quanCo[++ngChoi % 2]);
 		}
 	}
 
