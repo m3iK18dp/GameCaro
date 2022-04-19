@@ -104,26 +104,26 @@ public class GameCaro extends JFrame implements ActionListener {
 	public void addPoint(int x, int y, int value) {
 		b[x][y].setText("" + quanCo[(ngChoi + value) % 2]);
 		b[x][y].setForeground(cl[(ngChoi + value) % 2]);
-		b[x][y].setFont(new Font("Times New Roman", Font.BOLD, 10));
+		b[x][y].setFont(new Font("Times New Roman", Font.BOLD, 14));
 		banCo[x][y] = quanCo[(ngChoi + value) % 2];
+		count++;
 		if (checkWin(x, y, quanCo[(ngChoi + value) % 2])) {
 			lb.setBackground(Color.MAGENTA);
-			if (ngChoi == 0)
+			if (value == 0)
 				lb.setText("Bạn là người chiến thắng");
 			else
 				lb.setText("Bạn là người thua cuộc");
 			endGame(false);
-		} else if (count == soDong * soCot - 1) {
+		} else if (count == soDong * soCot) {
 			lb.setBackground(Color.MAGENTA);
 			lb.setText("HÒA");
 			endGame(false);
 		} else {
-			if ((ngChoi + count) % 2 == 0)
+			if ((++value) % 2 == 0)
 				lb.setText("Lượt của bạn");
 			else
 				lb.setText("Lượt của đối thủ");
 		}
-		count++;
 	}
 
 	public static boolean checkWin(int x, int y, char co) {
