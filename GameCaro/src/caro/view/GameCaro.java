@@ -31,7 +31,7 @@ public class GameCaro extends JFrame implements ActionListener {
 		b = new JButton[soDong + 2][soCot + 2];
 		banCo = new char[soDong + 2][soCot + 2];
 		setBounds(new Rectangle(5, 5, 5, 5));
-		setTitle("GAME CARO" + (value == 0 ? "(Server)" : "(Client)"));
+		setTitle("GAME CARO");
 		setIgnoreRepaint(true);
 		setForeground(SystemColor.textText);
 		cn = this.getContentPane();
@@ -100,7 +100,7 @@ public class GameCaro extends JFrame implements ActionListener {
 	public void addPoint(int x, int y, int value) {
 		b[x][y].setText("" + quanCo[(ngChoi + value) % 2]);
 		b[x][y].setForeground(cl[(ngChoi + value) % 2]);
-		b[x][y].setFont(new Font("Times New Roman", Font.BOLD, 20));
+		b[x][y].setFont(new Font("Times New Roman", Font.BOLD, 10));
 		banCo[x][y] = quanCo[(ngChoi + value) % 2];
 		if (checkWin(x, y, quanCo[(ngChoi + value) % 2])) {
 			lb.setBackground(Color.MAGENTA);
