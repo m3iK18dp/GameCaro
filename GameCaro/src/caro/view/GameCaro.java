@@ -21,6 +21,10 @@ import javax.swing.border.EtchedBorder;
 import caro.socket.Message;
 
 public class GameCaro extends JFrame implements ActionListener {
+	public GameCaro() {
+
+	}
+
 	public GameCaro(int value, Message msg) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GameCaro.class.getResource("/caro/icon/logo.png")));
 		setType(Type.POPUP);

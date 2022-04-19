@@ -28,6 +28,7 @@ public class Message {
 					try {
 						String line = reader.readLine();
 						if (line != null) {
+							System.out.println("-" + line + "-");
 							if (line.equals("1")) {
 								gameCaro.dispose();
 								new GameCaro((gameCaro.ngChoi + 1) % 2, Message.this);
@@ -35,7 +36,7 @@ public class Message {
 								gameCaro.dispose();
 								new ShowMess("Doi phuong da thoat game. Ban la nguoi chien thang");
 							} else {
-								System.out.println(line);
+
 								String point[] = line.split(" ");
 								gameCaro.addPoint(Integer.parseInt(point[0]), Integer.parseInt(point[1]), 1);
 							}

@@ -9,7 +9,7 @@ import caro.view.WaitRoom;
 
 public class Server {
 	Message msg;
-	GameCaro gameCaro;
+	GameCaro gameCaro = new GameCaro();
 	ServerSocket listener = null;
 	Socket socketOfServer = null;
 	WaitRoom waitRoom = null;

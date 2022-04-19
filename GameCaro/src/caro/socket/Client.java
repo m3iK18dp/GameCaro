@@ -8,7 +8,7 @@ import caro.view.GameCaro;
 
 public class Client {
 	Message msg;
-	GameCaro gameCaro;
+	GameCaro gameCaro = new GameCaro();
 	Socket socketOfClient = null;
 
 	public Client(String serverHost, int port) throws UnknownHostException, IOException {
