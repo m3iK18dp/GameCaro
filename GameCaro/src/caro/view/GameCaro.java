@@ -88,8 +88,8 @@ public class GameCaro extends JFrame implements ActionListener {
 		});
 		GroupLayout gl_pn2 = new GroupLayout(pn2);
 		gl_pn2.setHorizontalGroup(gl_pn2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pn2.createSequentialGroup().addGap(220).addComponent(lb).addGap(114)
-						.addComponent(btnNewButton).addGap(330).addComponent(btnNewButton_1).addContainerGap()));
+				.addGroup(gl_pn2.createSequentialGroup().addGap(150).addComponent(lb).addGap(100)
+						.addComponent(btnNewButton).addGap(250).addComponent(btnNewButton_1).addContainerGap()));
 		gl_pn2.setVerticalGroup(gl_pn2.createParallelGroup(Alignment.LEADING).addGroup(
 				gl_pn2.createSequentialGroup().addGap(5).addGroup(gl_pn2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNewButton).addComponent(btnNewButton_1).addComponent(lb))));
