@@ -112,16 +112,20 @@ public class GameCaro extends JFrame implements ActionListener {
 				lb.setText("Bạn là người chiến thắng");
 			else
 				lb.setText("Bạn là người thua cuộc");
-			endGame();
 		}
 		if (!cW && count == 159) {
 			lb.setBackground(Color.MAGENTA);
 			lb.setText("HÒA");
-			endGame();
+			endGame(false);
 		}
 		if (!cW) {
-			lb.setText("Lượt của " + quanCo[++ngChoi % 2]);
+			if ((ngChoi + count) % 2 == 0)
+				lb.setText("Lượt của bạn");
+			else
+				lb.setText("Lượt của đối thủ");
 		}
+		count++;
+		endGame(false);
 	}
 
 	public static boolean checkWin(int x, int y, char co) {
@@ -182,11 +186,11 @@ public class GameCaro extends JFrame implements ActionListener {
 		return false;
 	}
 
-	public void endGame() {
+	public void endGame(boolean bl) {
 		for (int i = 1; i <= soDong; i++)
 			for (int j = 1; j <= soCot; j++)
 				if (banCo[i][j] == '\u0000')
-					b[i][j].setEnabled(false);
+					b[i][j].setEnabled(bl);
 		cW = true;
 	}
 
@@ -198,7 +202,6 @@ public class GameCaro extends JFrame implements ActionListener {
 		int x = Integer.parseInt(k[0]);
 		int y = Integer.parseInt(k[1]);
 		if (banCo[x][y] == '\u0000') {
-			count++;
 			addPoint(x, y, 0);
 		}
 	}

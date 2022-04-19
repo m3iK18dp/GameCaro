@@ -36,7 +36,7 @@ public class Message {
 								gameCaro.dispose();
 								new ShowMess("Doi phuong da thoat game. Ban la nguoi chien thang");
 							} else {
-
+								gameCaro.endGame(true);
 								String point[] = line.split(" ");
 								gameCaro.addPoint(Integer.parseInt(point[0]), Integer.parseInt(point[1]), 1);
 							}
