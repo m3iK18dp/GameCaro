@@ -52,7 +52,7 @@ public class Message {
 							gameCaro.dispose();
 							gameCaro = new GameCaro((++gameCaro.ngChoi) % 2, Message.this);
 						} else {
-							gameCaro.endGame(true);
+							gameCaro.getLock(false);
 							String point[] = line.split(" ");
 							gameCaro.addPoint(Integer.parseInt(point[0]), Integer.parseInt(point[1]), 1);
 						}

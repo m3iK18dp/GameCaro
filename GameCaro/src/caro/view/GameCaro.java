@@ -63,14 +63,11 @@ public class GameCaro extends JFrame implements ActionListener {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				new GameCaro((++ngChoi) % 2, msg);
 				msg.send("1");
-//				dispose();
 			}
 		});
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnNewButton.setBackground(Color.RED);
-
 		btnNewButton_1 = new JButton("Thoát");
 		btnNewButton_1.setBackground(Color.BLACK);
 		btnNewButton_1.setForeground(Color.MAGENTA);
@@ -95,7 +92,7 @@ public class GameCaro extends JFrame implements ActionListener {
 		this.setSize(1500, 1080);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		endGame(ngChoi == 0 ? true : false);
+		lock = ngChoi == 0 ? false : true;
 	}
 
 	public static boolean checkWin(int x, int y, char co) {
@@ -156,24 +153,6 @@ public class GameCaro extends JFrame implements ActionListener {
 		return false;
 	}
 
-	public void endGame(boolean bl) {
-		new Thread(() -> {
-			for (int i = 1; i <= soDong; i++)
-				for (int j = 1; j <= soCot; j++)
-					if (banCo[i][j] == '\u0000')
-						b[i][j].setEnabled(bl);
-		}).start();
-	}
-
-	public void endGame(boolean bl, int x, int y) {
-		new Thread(() -> {
-			for (int i = 1; i <= soDong; i++)
-				for (int j = 1; j <= soCot; j++)
-					if (banCo[i][j] == '\u0000' && (i != x || j != y))
-						b[i][j].setEnabled(bl);
-		}).start();
-	}
-
 	public void addPoint(int x, int y, int value) {
 		if (banCo[x][y] == '\u0000') {
 			b[x][y].setEnabled(true);
@@ -187,11 +166,11 @@ public class GameCaro extends JFrame implements ActionListener {
 					lb.setText("Bạn là người chiến thắng");
 				else
 					lb.setText("Bạn là người thua cuộc");
-				endGame(false);
+				lock = true;
 			} else if (count == soDong * soCot) {
 				lb.setBackground(Color.MAGENTA);
 				lb.setText("HÒA");
-				endGame(false);
+				lock = true;
 			} else {
 				if ((++value) % 2 == 0)
 					lb.setText("Lượt của bạn");
@@ -201,19 +180,26 @@ public class GameCaro extends JFrame implements ActionListener {
 		}
 	}
 
+	public void getLock(boolean bl) {
+		this.lock = bl;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String s = e.getActionCommand();
-		String[] k = s.split(" ");
-		int x = Integer.parseInt(k[0]);
-		int y = Integer.parseInt(k[1]);
-		if (banCo[x][y] == '\u0000') {
-			new Thread(() -> msg.send(s)).start();
-			endGame(false, x, y);
-			addPoint(x, y, 0);
+		if (!lock) {
+			String s = e.getActionCommand();
+			String[] k = s.split(" ");
+			int x = Integer.parseInt(k[0]);
+			int y = Integer.parseInt(k[1]);
+			if (banCo[x][y] == '\u0000') {
+				new Thread(() -> msg.send(s)).start();
+				lock = true;
+				addPoint(x, y, 0);
+			}
 		}
 	}
 
+	boolean lock = false;
 	Message msg;
 	private static JButton b[][];
 	private Container cn;
