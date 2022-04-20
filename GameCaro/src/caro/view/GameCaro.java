@@ -169,13 +169,15 @@ public class GameCaro extends JFrame implements ActionListener {
 		new Thread(() -> {
 			for (int i = 1; i <= soDong; i++)
 				for (int j = 1; j <= soCot; j++)
-					if (!(banCo[i][j] != '\u0000' || i == x || j == y))
+					if (banCo[i][j] == '\u0000')
 						b[i][j].setEnabled(bl);
+			b[x][y].setEnabled(true);
 		}).start();
 	}
 
 	public void addPoint(int x, int y, int value) {
 		if (banCo[x][y] == '\u0000') {
+			b[x][y].setEnabled(true);
 			b[x][y].setForeground(cl[(ngChoi + value) % 2]);
 			b[x][y].setText("" + quanCo[(ngChoi + value) % 2]);
 			banCo[x][y] = quanCo[(ngChoi + value) % 2];
