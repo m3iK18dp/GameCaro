@@ -165,9 +165,17 @@ public class GameCaro extends JFrame implements ActionListener {
 		}).start();
 	}
 
+	public void endGame(boolean bl, int x, int y) {
+		new Thread(() -> {
+			for (int i = 1; i <= soDong; i++)
+				for (int j = 1; j <= soCot; j++)
+					if (!(banCo[i][j] != '\u0000' || i == x || j == y))
+						b[i][j].setEnabled(bl);
+		}).start();
+	}
+
 	public void addPoint(int x, int y, int value) {
 		if (banCo[x][y] == '\u0000') {
-			b[x][y].setEnabled(true);
 			b[x][y].setForeground(cl[(ngChoi + value) % 2]);
 			b[x][y].setText("" + quanCo[(ngChoi + value) % 2]);
 			banCo[x][y] = quanCo[(ngChoi + value) % 2];
@@ -200,7 +208,7 @@ public class GameCaro extends JFrame implements ActionListener {
 		int y = Integer.parseInt(k[1]);
 		if (banCo[x][y] == '\u0000') {
 			new Thread(() -> msg.send(s)).start();
-			endGame(false);
+			endGame(false, x, y);
 			addPoint(x, y, 0);
 		}
 	}
