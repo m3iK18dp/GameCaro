@@ -157,10 +157,12 @@ public class GameCaro extends JFrame implements ActionListener {
 	}
 
 	public void endGame(boolean bl) {
-		for (int i = 1; i <= soDong; i++)
-			for (int j = 1; j <= soCot; j++)
-				if (banCo[i][j] == '\u0000')
-					b[i][j].setEnabled(bl);
+		new Thread(() -> {
+			for (int i = 1; i <= soDong; i++)
+				for (int j = 1; j <= soCot; j++)
+					if (banCo[i][j] == '\u0000')
+						b[i][j].setEnabled(bl);
+		}).start();
 	}
 
 	public void addPoint(int x, int y, int value) {
@@ -198,7 +200,7 @@ public class GameCaro extends JFrame implements ActionListener {
 		int y = Integer.parseInt(k[1]);
 		if (banCo[x][y] == '\u0000') {
 			new Thread(() -> msg.send(s)).start();
-			new Thread(() -> endGame(false)).start();
+			endGame(false);
 			addPoint(x, y, 0);
 		}
 	}
