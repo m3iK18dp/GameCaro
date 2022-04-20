@@ -19,21 +19,17 @@ public class Server {
 			int port = (int) (Math.random() * 8975) + 1024;
 			listener = new ServerSocket(port);
 			waitRoom = new WaitRoom(port);
-			Thread th = new Thread() {
-				@Override
-				public void run() {
-					try {
-						socketOfServer = listener.accept();
-						msg = new Message(socketOfServer);
-						waitRoom.dispose();
-						gameCaro = new GameCaro(0, msg);
-						msg.getGame(gameCaro);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+			new Thread(() -> {
+				try {
+					socketOfServer = listener.accept();
+					msg = new Message(socketOfServer);
+					waitRoom.dispose();
+					gameCaro = new GameCaro(0, msg);
+					msg.getGame(gameCaro);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-			};
-			th.start();
+			}).start();
 		} catch (IOException e) {
 			System.out.println(e);
 			e.printStackTrace();

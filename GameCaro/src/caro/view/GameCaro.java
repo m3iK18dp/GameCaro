@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
-import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,34 +30,32 @@ public class GameCaro extends JFrame implements ActionListener {
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(GameCaro.class.getResource("/caro/icon/logo.png")));
 		this.msg = msg;
 		ngChoi = value;
-		b = new JButton[soDong + 2][soCot + 2];
-		banCo = new char[soDong + 2][soCot + 2];
+		b = new JButton[soDong + 1][soCot + 1];
+		banCo = new char[soDong + 1][soCot + 1];
 		setBounds(new Rectangle(5, 5, 5, 5));
 		setTitle("GAME CARO");
 		setIgnoreRepaint(true);
-		setForeground(SystemColor.textText);
 		cn = this.getContentPane();
 		pn = new JPanel();
-		pn.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		pn.setLayout(new GridLayout(soDong, soCot));
-
-		for (int i = 0; i <= soDong + 1; i++)
-			for (int j = 0; j <= soCot + 1; j++) {
+		pn.setBackground(Color.BLACK);
+		for (int i = 0; i <= soDong; i++)
+			for (int j = 0; j <= soCot; j++) {
 				b[i][j] = new JButton(" ");
 				b[i][j].setActionCommand(i + " " + j);
 				b[i][j].setBackground(Color.white);
 				b[i][j].addActionListener(this);
+				b[i][j].setFont(new Font("Times New Roman", Font.BOLD, 18));
+				if (i != 0 && j != 0)
+					pn.add(b[i][j]);
 			}
-		for (int i = 1; i <= soDong; i++)
-			for (int j = 1; j <= soCot; j++)
-				pn.add(b[i][j]);
 		lb = new JLabel(ngChoi == 0 ? "Bạn đánh trước" : "Đối thủ đánh trước");
 		lb.setForeground(new Color(255, 0, 0));
 		lb.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		pn2 = new JPanel();
 		pn2.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		pn2.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
-		pn2.setBackground(SystemColor.inactiveCaptionBorder);
+		pn2.setBackground(Color.WHITE);
 		cn.add(pn);
 		cn.add(pn2, "North");
 		btnNewButton = new JButton("New Game");
@@ -66,9 +63,9 @@ public class GameCaro extends JFrame implements ActionListener {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new GameCaro((++ngChoi) % 2, msg);
+//				new GameCaro((++ngChoi) % 2, msg);
 				msg.send("1");
-				dispose();
+//				dispose();
 			}
 		});
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -88,42 +85,17 @@ public class GameCaro extends JFrame implements ActionListener {
 		});
 		GroupLayout gl_pn2 = new GroupLayout(pn2);
 		gl_pn2.setHorizontalGroup(gl_pn2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pn2.createSequentialGroup().addGap(150).addComponent(lb).addGap(100)
-						.addComponent(btnNewButton).addGap(250).addComponent(btnNewButton_1).addContainerGap()));
+				.addGroup(gl_pn2.createSequentialGroup().addGap(400).addComponent(lb).addGap(150)
+						.addComponent(btnNewButton).addGap(550).addComponent(btnNewButton_1).addContainerGap()));
 		gl_pn2.setVerticalGroup(gl_pn2.createParallelGroup(Alignment.LEADING).addGroup(
 				gl_pn2.createSequentialGroup().addGap(5).addGroup(gl_pn2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNewButton).addComponent(btnNewButton_1).addComponent(lb))));
 		pn2.setLayout(gl_pn2);
 		this.setVisible(true);
-		this.setSize(880, 1080);
+		this.setSize(1500, 1080);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		endGame(ngChoi == 0 ? true : false);
-	}
-
-	public void addPoint(int x, int y, int value) {
-		b[x][y].setText("" + quanCo[(ngChoi + value) % 2]);
-		b[x][y].setForeground(cl[(ngChoi + value) % 2]);
-		b[x][y].setFont(new Font("Times New Roman", Font.BOLD, 10));
-		banCo[x][y] = quanCo[(ngChoi + value) % 2];
-		count++;
-		if (checkWin(x, y, quanCo[(ngChoi + value) % 2])) {
-			lb.setBackground(Color.MAGENTA);
-			if (value == 0)
-				lb.setText("Bạn là người chiến thắng");
-			else
-				lb.setText("Bạn là người thua cuộc");
-			endGame(false);
-		} else if (count == soDong * soCot) {
-			lb.setBackground(Color.MAGENTA);
-			lb.setText("HÒA");
-			endGame(false);
-		} else {
-			if ((++value) % 2 == 0)
-				lb.setText("Lượt của bạn");
-			else
-				lb.setText("Lượt của đối thủ");
-		}
 	}
 
 	public static boolean checkWin(int x, int y, char co) {
@@ -191,6 +163,33 @@ public class GameCaro extends JFrame implements ActionListener {
 					b[i][j].setEnabled(bl);
 	}
 
+	public void addPoint(int x, int y, int value) {
+		if (banCo[x][y] == '\u0000') {
+			b[x][y].setEnabled(true);
+			b[x][y].setForeground(cl[(ngChoi + value) % 2]);
+			b[x][y].setText("" + quanCo[(ngChoi + value) % 2]);
+			banCo[x][y] = quanCo[(ngChoi + value) % 2];
+			count++;
+			if (checkWin(x, y, quanCo[(ngChoi + value) % 2])) {
+				lb.setBackground(Color.MAGENTA);
+				if (value == 0)
+					lb.setText("Bạn là người chiến thắng");
+				else
+					lb.setText("Bạn là người thua cuộc");
+				endGame(false);
+			} else if (count == soDong * soCot) {
+				lb.setBackground(Color.MAGENTA);
+				lb.setText("HÒA");
+				endGame(false);
+			} else {
+				if ((++value) % 2 == 0)
+					lb.setText("Lượt của bạn");
+				else
+					lb.setText("Lượt của đối thủ");
+			}
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s = e.getActionCommand();
@@ -198,10 +197,10 @@ public class GameCaro extends JFrame implements ActionListener {
 		int x = Integer.parseInt(k[0]);
 		int y = Integer.parseInt(k[1]);
 		if (banCo[x][y] == '\u0000') {
+			new Thread(() -> msg.send(s)).start();
+			new Thread(() -> endGame(false)).start();
 			addPoint(x, y, 0);
 		}
-		msg.send(s);
-		endGame(false);
 	}
 
 	Message msg;
@@ -210,7 +209,7 @@ public class GameCaro extends JFrame implements ActionListener {
 	private JPanel pn, pn2;
 	private static JLabel lb;
 	private static final int soDong = 20;
-	private static final int soCot = 20;
+	private static final int soCot = 30;
 	private static final char[] quanCo = { 'X', 'O' };
 	private static final Color[] cl = { Color.RED, Color.BLUE };
 	private static char[][] banCo;

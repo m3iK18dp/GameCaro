@@ -6,12 +6,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 import caro.view.GameCaro;
 import caro.view.ShowMess;
 import caro.view.Start;
 
 public class Message {
-	private Socket socket;
 	private PrintWriter out;
 	private BufferedReader reader;
 	private GameCaro gameCaro;
@@ -27,45 +28,43 @@ public class Message {
 	}
 
 	private void receive() {
-		Thread th = new Thread() {
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						String line = reader.readLine();
-						if (line != null) {
-							if (line.equals("1")) {
+		new Thread(() -> {
+			while (true) {
+				try {
+					String line = reader.readLine();
+					if (line != null) {
+						if (line.equals("1")) {
+							int result = JOptionPane.showConfirmDialog(null,
+									"Đối phương muốn chơi ván mới. Bạn có đồng ý?", "Đồng ý", JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE);
+							if (result == JOptionPane.YES_OPTION) {
 								gameCaro.dispose();
-								gameCaro = new GameCaro((gameCaro.ngChoi + 1) % 2, Message.this);
-							} else if (line.equals("2")) {
-								new ShowMess("Doi phuong da thoat game. Ban la nguoi chien thang");
-								gameCaro.dispose();
-								new Start();
-							} else {
-								gameCaro.endGame(true);
-								String point[] = line.split(" ");
-								gameCaro.addPoint(Integer.parseInt(point[0]), Integer.parseInt(point[1]), 1);
+								gameCaro = new GameCaro((++gameCaro.ngChoi) % 2, Message.this);
+								send("3");
+							} else if (result == JOptionPane.NO_OPTION) {
+
 							}
+						} else if (line.equals("2")) {
+							new ShowMess("Doi phuong da thoat game");
+							gameCaro.dispose();
+							new Start();
+						} else if (line.equals("3")) {
+							gameCaro.dispose();
+							gameCaro = new GameCaro((++gameCaro.ngChoi) % 2, Message.this);
+						} else {
+							gameCaro.endGame(true);
+							String point[] = line.split(" ");
+							gameCaro.addPoint(Integer.parseInt(point[0]), Integer.parseInt(point[1]), 1);
 						}
-					} catch (Exception e) {
 					}
+				} catch (Exception e) {
 				}
 			}
-		};
-		th.start();
+		}).start();
 	}
 
 	public void send(String msg) {
 		out.println(msg);
 		out.flush();
-	}
-
-	public void close() {
-		try {
-			out.close();
-			reader.close();
-			socket.close();
-		} catch (Exception e) {
-		}
 	}
 }
