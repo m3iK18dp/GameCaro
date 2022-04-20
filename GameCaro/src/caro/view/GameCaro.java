@@ -169,9 +169,8 @@ public class GameCaro extends JFrame implements ActionListener {
 		new Thread(() -> {
 			for (int i = 1; i <= soDong; i++)
 				for (int j = 1; j <= soCot; j++)
-					if (banCo[i][j] == '\u0000')
+					if (banCo[i][j] == '\u0000' && (i != x || j != y))
 						b[i][j].setEnabled(bl);
-			b[x][y].setEnabled(true);
 		}).start();
 	}
 
