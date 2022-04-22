@@ -199,19 +199,19 @@ public class GameCaro extends JFrame implements ActionListener {
 		}
 	}
 
-	boolean lock = false;
+	int count = 0;
 	Message msg;
-	private static JButton b[][];
-	private Container cn;
-	private JPanel pn, pn2;
-	private static JLabel lb;
+	boolean lock = false;
 	private static final int soDong = 20;
 	private static final int soCot = 30;
 	private static final char[] quanCo = { 'X', 'O' };
 	private static final Color[] cl = { Color.RED, Color.BLUE };
+	private static JLabel lb;
+	private static JButton b[][];
 	private static char[][] banCo;
 	public static int ngChoi;
 	private JButton btnNewButton;
-	int count = 0;
 	private JButton btnNewButton_1;
+	private Container cn;
+	private JPanel pn, pn2;
 }

@@ -54,7 +54,6 @@ public class Join extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-
 					if (textField_1.getText().equals(""))
 						new Client("localhost", Integer.parseInt(textField.getText()));
 					else

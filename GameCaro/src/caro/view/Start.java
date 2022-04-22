@@ -37,7 +37,6 @@ public class Start extends JFrame {
 		setVisible(true);
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Start.class.getResource("/caro/icon/logo.png")));
-
 		JButton btn_taophong = new JButton("Tạo phòng");
 		btn_taophong.setBackground(Color.BLUE);
 		btn_taophong.setFont(new Font("Arial", Font.BOLD, 16));

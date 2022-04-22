@@ -42,15 +42,17 @@ public class Message {
 								gameCaro = new GameCaro((++gameCaro.ngChoi) % 2, Message.this);
 								send("3");
 							} else if (result == JOptionPane.NO_OPTION) {
-
+								send("4");
 							}
 						} else if (line.equals("2")) {
-							new ShowMess("Doi phuong da thoat game");
+							new ShowMess("Đối phương đã thoát game");
 							gameCaro.dispose();
 							new Start();
 						} else if (line.equals("3")) {
 							gameCaro.dispose();
 							gameCaro = new GameCaro((++gameCaro.ngChoi) % 2, Message.this);
+						} else if (line.equals("4")) {
+							new ShowMess("Đối phương không đồng ý chơi ván mới");
 						} else {
 							gameCaro.getLock(false);
 							String point[] = line.split(" ");
