@@ -62,9 +62,9 @@ public class Join extends JFrame {
 				} catch (NumberFormatException e1) {
 					new ShowMess("Nhap chu so vao o ID Room");
 				} catch (UnknownHostException e1) {
-					new ShowMess("Don't know about host ");
+					new ShowMess("Không tìm thấy Server Host");
 				} catch (IOException e1) {
-					new ShowMess("Couldn't get I/O for the connection to ");
+					new ShowMess("Không tìm thấy phòng");
 				}
 			}
 		});
